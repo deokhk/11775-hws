@@ -55,7 +55,7 @@ $ for file in videos/*;do filename=$(basename $file .mp4); ffmpeg -y -i $file -a
 Then run OpenSMILE to get MFCCs into CSV files. We will directly run the binaries of OpenSMILE (no need to install):
 
 ```
-$ for file in wav/*;do filename=$(basename $file .wav); ./tools/opensmile-3.0.1-linux-x64/bin/SMILExtract -C config/MFCC12_0_D_A.conf -I wav/${filename} -O mfcc/${filename}.mfcc.csv;done
+$ for file in wav/*;do filename=$(basename $file .wav); ./tools/opensmile-3.0.1-linux-x64/bin/SMILExtract -C config/MFCC12_0_D_A.conf -I ${file} -O mfcc/${filename}.mfcc.csv;done
 ```
 
 The above should take 1-2 hours. If you generate less `.wav` or `.mfcc` files that video, do not worry, that is normal in real-life scenarios. Report which video files had trouble and investigate the reason of the failure.
