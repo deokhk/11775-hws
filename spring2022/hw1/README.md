@@ -120,6 +120,7 @@ $ python train_mlp.py bof/ 50 labels/trainval.csv models/mfcc-50.mlp.model
 
 Test:
 ```
+$ mkdir results
 $ python test_mlp.py models/mfcc-50.mlp.model bof 50 labels/test_for_student.label results/mfcc-50.mlp.csv
 ```
 
