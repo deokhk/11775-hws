@@ -4,20 +4,21 @@ In this homework we will perform a video classification task using audio-only fe
 
 ## Data and Labels
 
-Please download the data from [this link](https://drive.google.com/file/d/1Oyzv7eC0QDrg0vX3AdSXYzdsFpIsdzT-/view?usp=sharing). The `.zip` file should include the following:
+Please download the data from [this link](https://drive.google.com/file/d/1WEINPdvQ1ZUELxaXlhHcvoOjEML8gYYY/view?usp=sharing). The `.zip` file should include the following:
 1. `video/` folder with 8249 videos in MP4 format
 2. `labels/` folder with two files:
-    - `train_val.csv`: with the name and label of all the videos
-    - ``
+    - `cls_map.csv`: csv with the mapping of the labels and its corresponding class ID (*Category*)
+    - `train_val.csv`: csv with the Id of the video and its label
+    - `test_for_students.csv`: submission template with the list of test samples
+
 
 ## Step-by-step baseline instructions
 
 For the baselines, we will provide code and instructions for two feature representations (MFCC-Bag-of-Features and [SoundNet-Global-Pool](https://arxiv.org/pdf/1610.09001.pdf)) and two classifiers (SVM and MLP). Assuming you are under Ubuntu 18.04 system and under this directory (11775-hws/spring2022/hw1/).
 
-First uncompress the data into this folder and the labels into `labels/` folder simply by:
+First uncompress the data into this folder simply by running:
 ```
-$ unzip hw_11775_videos.zip
-$ unzip labels_v2.zip
+$ unzip 11775_s22_data.zip
 ```
 
 ### MFCC-Bag-Of-Features
