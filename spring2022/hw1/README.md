@@ -140,6 +140,6 @@ Now here comes the fun part. You can start experimenting with the code and explo
 + Split `trainval.csv` into `train.csv` and `val.csv` to validate your model variants. This is important since the leaderboard limits the number of times you can submit, which means you cannot test most of your experiments on the official test set.
 + Try different number of K-Means clusters
 + Try different layers of SoundNet
-+ Try out other audio features such as [VGGSound](https://github.com/hche11/VGGSound) or the latest proposed models for audio classification [PaSST](https://github.com/kkoutini/passt).
++ Try out other audio features such as [VGGSound](https://github.com/hche11/VGGSound) or the latest model for audio classification [PaSST](https://github.com/kkoutini/passt).
 + Try different classifiers (different SVM kernels, different MLP hidden sizes, etc.). Please refer to [sklearn](https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html#sklearn.neural_network.MLPClassifier) documentation.
 + Try different fusion or model aggregation methods. For example, you can simply average two model predictions (late fusion).
