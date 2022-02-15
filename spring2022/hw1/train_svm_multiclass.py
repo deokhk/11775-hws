@@ -5,8 +5,10 @@ import os
 from sklearn.svm import SVC
 import pickle
 import argparse
+import wandb
 import sys
 import pdb
+from sklearn.model_selection import train_test_split
 
 # Train SVM
 
@@ -19,6 +21,9 @@ parser.add_argument("--feat_appendix", default=".csv")
 
 if __name__ == '__main__':
   args = parser.parse_args()
+  # 0. Set up wandb
+  wandb.init(project="MultAnalysis_HW1", entity="deokhk")
+  wandb.config.update(args)
 
   # 1. read all features in one array.
   fread = open(args.list_videos, "r")
@@ -44,6 +49,14 @@ if __name__ == '__main__':
   print("number of samples: %s" % len(feat_list))
   y = np.array(label_list)
   X = np.array(feat_list)
+  print(f'X: {X.shape}')
+  print(f'y: {y.shape}')
+  
+  # Split training and validation examples
+  train_size = 0.9
+  X_train, X_val, y_train, y_val = train_test_split(X, y, train_size = train_size)
+
+  print(f'Train data: {X_train.shape}, Validation data: {X_val.shape}')
 
   # pass array for svm training
   # one-versus-rest multiclass strategy
@@ -53,3 +66,8 @@ if __name__ == '__main__':
   # save trained SVM in output_file
   pickle.dump(clf, open(args.output_file, 'wb'))
   print('One-versus-rest multi-class SVM trained successfully')
+
+  print('Now evaluating the MLP classifiers..')
+  accuracy = clf.score(X_val, y_val)
+  wandb.log({"Val_accuracy": accuracy})
+  print(f"Validation accuracy: {accuracy}")
