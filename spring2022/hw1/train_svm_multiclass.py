@@ -9,6 +9,7 @@ import wandb
 import sys
 import pdb
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix, plot_confusion_matrix
 
 # Train SVM
 
@@ -67,7 +68,43 @@ if __name__ == '__main__':
   pickle.dump(clf, open(args.output_file, 'wb'))
   print('One-versus-rest multi-class SVM trained successfully')
 
-  print('Now evaluating the MLP classifiers..')
+  print('Now evaluating the SVM classifiers..')
   accuracy = clf.score(X_val, y_val)
   wandb.log({"Val_accuracy": accuracy})
   print(f"Validation accuracy: {accuracy}")
+
+  print("Now generating confusion matrix..")
+  label = ['blowing_out_candles',
+    'dribbling_basketball',
+    'flipping_pancake',
+    'getting_a_haircut',
+    'hitting_baseball',
+    'home_roasting_coffee',
+    'motorcycling',
+    'mowing_lawn',
+    'playing_drums',
+    'playing_guitar',
+    'playing_piano',
+    'shoveling_snow',
+    'singing',
+    'tapping_pen',
+    'tickling'
+  ]
+  # First, plot non-normalized version.
+  plot = plot_confusion_matrix(clf,
+                              X_val, y_val,
+                              display_labels=label,
+                              cmap=plt.cm.Blue,
+                              normalize=None)
+  plot.ax_.set_title('Confusion Matrix')
+  plot.savefig('Non-normalized.png')
+  # Second, plot normalized version.
+  plot_normalized = plot_confusion_matrix(clf,
+                              X_val, y_val,
+                              display_labels=label,
+                              cmap=plt.cm.Blue,
+                              normalize='true')
+  plot_normalized.ax_.set_title('Confusion Matrix')
+  plot_normalized.savefig('Normalized.png')
+    
+    

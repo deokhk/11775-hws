@@ -6,8 +6,10 @@ import pickle
 import wandb
 
 import numpy as np
+import matplotlib.pyplot as plt
 from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix, plot_confusion_matrix
 
 import sys
 
@@ -60,7 +62,8 @@ if __name__ == '__main__':
 
   print(f'Train data: {X_train.shape}, Validation data: {X_val.shape}')
 
-  clf = MLPClassifier(hidden_layer_sizes=(512),
+
+  clf = MLPClassifier(hidden_layer_sizes=(1024, 512),
                       activation="relu",
                       solver="adam",
                       alpha=1e-3)
@@ -74,3 +77,37 @@ if __name__ == '__main__':
   accuracy = clf.score(X_val, y_val)
   wandb.log({"Val_accuracy": accuracy})
   print(f"Validation accuracy: {accuracy}")
+
+  print("Now generating confusion matrix..")
+  """
+  label = ['blowing_out_candles',
+    'dribbling_basketball',
+    'flipping_pancake',
+    'getting_a_haircut',
+    'hitting_baseball',
+    'home_roasting_coffee',
+    'motorcycling',
+    'mowing_lawn',
+    'playing_drums',
+    'playing_guitar',
+    'playing_piano',
+    'shoveling_snow',
+    'singing',
+    'tapping_pen',
+    'tickling'
+  ]
+  """
+  # First, plot non-normalized version.
+  plot = plot_confusion_matrix(clf,
+                              X_val, y_val,
+                              cmap=plt.cm.Blues,
+                              normalize=None)
+  plot.ax_.set_title('Confusion Matrix')
+  plot.figure_.savefig('Non-normalized.png')
+  # Second, plot normalized version.
+  plot_normalized = plot_confusion_matrix(clf,
+                              X_val, y_val,
+                              cmap=plt.cm.Greens,
+                              normalize='true')
+  plot_normalized.ax_.set_title('Confusion Matrix')
+  plot_normalized.figure_.savefig('Normalized.png')
