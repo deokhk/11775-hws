@@ -3,7 +3,6 @@
 import argparse
 import os
 import pickle
-import wandb
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -24,9 +23,6 @@ parser.add_argument("--feat_appendix", default=".csv")
 if __name__ == '__main__':
 
   args = parser.parse_args()
-  # 0. Set up wandb
-  wandb.init(project="MultAnalysis_HW1", entity="deokhk")
-  wandb.config.update(args)
 
   # 1. read all features in one array.
   fread = open(args.list_videos, "r")
@@ -75,7 +71,6 @@ if __name__ == '__main__':
 
   print('Now evaluating the MLP classifiers..')
   accuracy = clf.score(X_val, y_val)
-  wandb.log({"Val_accuracy": accuracy})
   print(f"Validation accuracy: {accuracy}")
 
   print("Now generating confusion matrix..")
